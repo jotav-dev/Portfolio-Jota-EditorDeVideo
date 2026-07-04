@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lunar</title>
+  <link rel="stylesheet" href="css/style.css">
+
+</head>
+<body>
+  <!-- Introdução -->
+  <header class="intro">
+    <h1 class="tituloPrincipal">
+      <span>J</span><span>o</span><span>t</span><span>a</span>
+    </h1>
+    <p class="subtituloPrincipal">Editor de Vídeos</p>
+    
+  </header>
+
+  <!-- Carrossel Clientes-->
+
+<section class="clientes">
+  <div class="faixa" id="faixaClientes">
+  <img src="img/cliente1.jpg" alt="Cliente 1">
+  <img src="img/cliente2.jpg" alt="Cliente 2">
+  <img src="img/cliente3.jpg" alt="Cliente 3">
+  <img src="img/cliente4.jpg" alt="Cliente 4">
+</div>
+</section>
+
+
+
+
+  <!-- Adicionado Recentemente -->
+
+  <!-- 
+  <section class="videos">
+    <h2 class="tituloVideos">Alguns vídeos Editados recentemente</h2>
+    <div class="videoContainer">
+      <iframe src="https://www.youtube.com/embed/irF12leo3Z0" 
+              title="Vídeo 1 - Jota"
+              frameborder="0" 
+              allowfullscreen>
+      </iframe>
+
+      <iframe src="https://www.youtube.com/embed/RXv7neRSZrs"
+              title="Vídeo 2 - Jota"
+              frameborder="0" 
+              allowfullscreen>
+      </iframe>
+    </div>
+  </section>
+  -->
+
+  <!-- Portfolio principal-->
+
+<section class="categorias">
+  <h2 class="tituloCategoria">Escolha a Categoria</h2>
+  <div class="botoes">
+    <button data-categoria="todos">Todos</button>
+    <button data-categoria="gameplays">Gameplays</button>
+    <button data-categoria="shorts">Shorts no Geral</button>
+  </div>
+</section>
+
+<section class="videos">
+  <div class="videoContainer">
+    <iframe src="https://www.youtube.com/embed/irF12leo3Z0" 
+            title="Youtube"
+            data-categoria="gameplays"
+            allowfullscreen></iframe>
+
+    <iframe src="https://www.youtube.com/embed/RXv7neRSZrs"
+            title="Youtube"
+            data-categoria="shorts"
+            allowfullscreen></iframe>
+  </div>
+</section>
+
+
+  <section class="social">
+  <h2>Me Contrate</h2>
+  <div class="icones">
+    <!-- Twitter -->
+    <a href="https://twitter.com/seuUsuario" target="_blank">
+      <img src="img/icons/twiter.png">
+    </a>
+
+    <!-- Discord -->
+    <a href="https://discord.gg/seuServidor" target="_blank">
+      <img src="img/icons/discord-icon.png"">
+    </a>
+
+    <!-- WhatsApp -->
+    <a href="https://wa.me/5599999999999" target="_blank">
+      <img src="img/icons/whatsa.png">
+    </a>
+  </div>
+  <h3>Gostou do meu trabalho, e tem algo em mente?
+    <br> me contrate e vamos trabalhar juntos!</h3>
+</section>
+
+
+  <!--Java Scripts-->
+  <script src="./js/filtro.js"></script>
+  
+</body>
+</html>
