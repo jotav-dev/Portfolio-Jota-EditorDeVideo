@@ -5,105 +5,131 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Lunar</title>
   <link rel="stylesheet" href="css/style.css">
-
 </head>
 <body>
+
   <!-- Introdução -->
   <header class="intro">
     <h1 class="tituloPrincipal">
       <span>J</span><span>o</span><span>t</span><span>a</span>
     </h1>
     <p class="subtituloPrincipal">Editor de Vídeos</p>
-    
   </header>
 
-  <!-- Carrossel Clientes-->
+  <!-- Carrossel Clientes -->
+  <section class="clientes">
+    <div class="faixa" id="faixaClientes">
 
-<section class="clientes">
-  <div class="faixa" id="faixaClientes">
-  <img src="img/cliente1.jpg" alt="Cliente 1">
-  <img src="img/cliente2.jpg" alt="Cliente 2">
-  <img src="img/cliente3.jpg" alt="Cliente 3">
-  <img src="img/cliente4.jpg" alt="Cliente 4">
-</div>
-</section>
+      <!-- Cada cliente é um "pacote": foto + caixinha de feedback escondida -->
+      <div class="clienteItem">
+        <img src="img/fotosPerfil/KvotheDiscord.jpg" alt="Cliente 1"> <!-- foto que aparece no carrossel -->
+        <div class="feedbackBox"> <!-- caixinha que só aparece no hover -->
+          <strong>Kvothe</strong> <!-- nome do cliente -->
+          <p>Extremamente rápido e competente, sempre com muita transparência e mostrando o trabalho, gostei bastante!</p>
+        </div>
+      </div>
 
+      <div class="clienteItem">
+        <img src="img/fotosPerfil/AlencarDiscord.jpg" alt="Cliente 2">
+        <div class="feedbackBox">
+          <strong>Alencar</strong>
+          <p>Ficou muito bom, agora é esperar o YT recomendar.</p>
+        </div>
+      </div>
 
+      <div class="clienteItem">
+        <img src="img/cliente3.jpg" alt="Cliente 3">
+        <div class="feedbackBox">
+          <strong>Cliente 3</strong>
+          <p>Coloque aqui o feedback desse cliente.</p>
+        </div>
+      </div>
 
+      <div class="clienteItem">
+        <img src="img/cliente4.jpg" alt="Cliente 4">
+        <div class="feedbackBox">
+          <strong>Cliente 4</strong>
+          <p>Coloque aqui o feedback desse cliente.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
 
   <!-- Adicionado Recentemente -->
-
-  <!-- 
+  <!--
   <section class="videos">
     <h2 class="tituloVideos">Alguns vídeos Editados recentemente</h2>
     <div class="videoContainer">
-      <iframe src="https://www.youtube.com/embed/irF12leo3Z0" 
+      <iframe src="https://www.youtube.com/embed/irF12leo3Z0"
               title="Vídeo 1 - Jota"
-              frameborder="0" 
+              frameborder="0"
               allowfullscreen>
       </iframe>
 
       <iframe src="https://www.youtube.com/embed/RXv7neRSZrs"
               title="Vídeo 2 - Jota"
-              frameborder="0" 
+              frameborder="0"
               allowfullscreen>
       </iframe>
     </div>
   </section>
   -->
 
-  <!-- Portfolio principal-->
+  <!-- Portfólio principal -->
+  <section class="categorias">
+    <h2 class="tituloCategoria">Escolha a Categoria</h2>
+    <div class="botoes">
+      <button data-categoria="todos">Todos</button>
+      <button data-categoria="gameplays">Gameplays</button>
+      <button data-categoria="shorts">Shorts</button>
+    </div>
+  </section>
 
-<section class="categorias">
-  <h2 class="tituloCategoria">Escolha a Categoria</h2>
-  <div class="botoes">
-    <button data-categoria="todos">Todos</button>
-    <button data-categoria="gameplays">Gameplays</button>
-    <button data-categoria="shorts">Shorts no Geral</button>
-  </div>
-</section>
+  <section class="videos">
+    <div class="videoContainer">
+      <iframe src="https://www.youtube.com/embed/m_CjkkusGVg?si=HjWHFCxzDmkFz54F"
+              title="Youtube"
+              data-categoria="gameplays"
+              allowfullscreen></iframe>
 
-<section class="videos">
-  <div class="videoContainer">
-    <iframe src="https://www.youtube.com/embed/irF12leo3Z0" 
-            title="Youtube"
-            data-categoria="gameplays"
-            allowfullscreen></iframe>
+      <iframe src="https://www.youtube.com/embed/-8i6WUHX6zs?si=NVp6Oai4rXI3pjPx"
+              title="Youtube"
+              data-categoria="gameplays"
+              allowfullscreen></iframe>
 
-    <iframe src="https://www.youtube.com/embed/RXv7neRSZrs"
-            title="Youtube"
-            data-categoria="shorts"
-            allowfullscreen></iframe>
-            
-  </div>
-</section>
+      <iframe src="https://www.youtube.com/embed/aopzr8qWNIM?si=mZ4Yu7hi-1IH6_xv"
+              title="Youtube"
+              data-categoria="shorts"
+              allowfullscreen></iframe>
+    </div>
+  </section>
 
-
+  <!-- Aba Contrate-me -->
   <section class="social">
-  <h2>Me Contrate</h2>
-  <div class="icones">
-    <!-- Twitter -->
-    <a href="https://twitter.com/seuUsuario" target="_blank">
-      <img src="img/icons/twiter.png">
-    </a>
+    <h2>Me Contrate</h2>
+    <div class="icones">
+      <!-- Twitter -->
+      <a href="https://twitter.com/seuUsuario" target="_blank">
+        <img src="img/icons/twiter.png" alt="Twitter">
+      </a>
 
-    <!-- Discord -->
-    <a href="https://discord.gg/seuServidor" target="_blank">
-      <img src="img/icons/discord-icon.png"">
-    </a>
+      <!-- Discord -->
+      <a href="https://discord.gg/seuServidor" target="_blank">
+        <img src="img/icons/discord-icon.png" alt="Discord">
+      </a>
 
-    <!-- WhatsApp -->
-    <a href="https://wa.me/5599999999999" target="_blank">
-      <img src="img/icons/whatsa.png">
-    </a>
-  </div>
-  <h3>Gostou do meu trabalho, e tem algo em mente?
-    <br> me contrate e vamos trabalhar juntos!</h3>
-</section>
+      <!-- WhatsApp -->
+      <a href="https://wa.me/5599999999999" target="_blank">
+        <img src="img/icons/whatsa.png" alt="WhatsApp">
+      </a>
+    </div>
+    <h3>Gostou do meu trabalho, e tem algo em mente?
+      <br> me contrate e vamos trabalhar juntos!</h3>
+  </section>
 
-
-  <!--Java Scripts-->
+  <!-- Java Scripts -->
   <script src="./js/filtro.js"></script>
-  
+
 </body>
 </html>

@@ -1,4 +1,4 @@
-
+/* Fonte customizada usada nos títulos */
 @font-face {
     font-family: 'Comic';
     src: url('../fonts/HeyComic.otf') format('opentype'),
@@ -7,27 +7,22 @@
     font-style: normal;
 }
 
+/* Reset básico + fundo em degradê preto -> roxo em toda a página */
 html, body {
     margin: 0;
     padding: 0;
     overflow-x: hidden; /* remove rolagem horizontal */
-    /* Gradiente linear do preto para o roxo */
     background: linear-gradient(135deg, #000000, #2e003e);
     min-height: 225vh;
 
-    /* Fonte e estilo padrão */
     font-family: Arial, Helvetica, sans-serif;
-    margin: 0;
-    padding: 0;
-    color: #b4b4b4
-
+    color: #b4b4b4;
 }
 
 
+/* ===================== Introdução do Site ===================== */
 
- /*Css | Introdução do Site */
-
- .tituloPrincipal {
+.tituloPrincipal {
     text-align: center;
     margin-top: 10vh;
     color: rgb(180, 180, 180);
@@ -43,30 +38,32 @@ html, body {
     font-family: 'Comic', Helvetica, sans-serif;
 }
 
-
-/* Efeito de Revelação, na cor vermelha */
-
+/* Efeito de revelação: cada letra do título fica roxa ao passar o mouse */
 .tituloPrincipal span {
     color: rgb(180, 180, 180);
     transition: color 0.2s ease-in-out;
-    cursor: default; /* mantém o ponteiro padrão */
+    cursor: default;
 }
 
 .tituloPrincipal span:hover {
     color: rgb(85, 0, 255);
 }
 
-/* Carrossel Infinito */
 
+/* ===================== Carrossel Infinito de Clientes ===================== */
 
+/* Área visível do carrossel: esconde o que passa das bordas */
 .carrossel {
   overflow: hidden;
   width: 100%;
   position: relative;
 }
 
+/* Faixa que desliza da direita pra esquerda infinitamente */
 .faixa {
-  margin-top: 1vh;
+  position: relative;
+  z-index: 1;              /* garante que as fotos fiquem acima da faixa decorativa (::before) */
+  margin-top: 15vh;
   display: flex;
   gap: 40px;
   width: max-content;
@@ -74,30 +71,31 @@ html, body {
   animation: rolarClientes 20s linear infinite;
 }
 
-.faixa img {
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  box-shadow: 0 0 15px rgba(128,0,128,0.7);
-  flex-shrink: 0;
+/* Quando o mouse está em cima de QUALQUER cliente, a rolagem inteira pausa.
+   Funciona porque o hover no filho (.clienteItem) "sobe" até o pai (.faixa). */
+.faixa:hover {
+  animation-play-state: paused;
 }
 
+/* Trajeto da animação: começa fora da tela à direita e termina fora da tela à esquerda */
 @keyframes rolarClientes {
   from {
-    transform: translateX(100vw);   /* começa fora da tela, à direita */
+    transform: translateX(100vw);
   }
   to {
-    transform: translateX(-100%);   /* termina fora da tela, à esquerda */
+    transform: translateX(-100%);
   }
 }
 
+/* Seção que contém o carrossel + a faixa decorativa atrás dele */
 .clientes {
   position: relative;
   padding: 100px 0;
   overflow: hidden;
-  isolation: isolate;   /* força um novo contexto de empilhamento aqui */
+  isolation: isolate;   /* cria um novo contexto de empilhamento, evitando bugs de z-index */
 }
 
+/* Faixa roxa decorativa atrás das fotos (efeito de "trilho") */
 .clientes::before {
   content: "";
   position: absolute;
@@ -118,61 +116,141 @@ html, body {
   z-index: 0;
 }
 
-.faixa {
+/* Cada cliente vira uma caixa "âncora" para a foto e o balão de feedback.
+   position: relative permite que o .feedbackBox se posicione em relação
+   a ESTE item específico, e não à tela toda. */
+.clienteItem {
   position: relative;
-  z-index: 1;             /* garante que as fotos fiquem acima da faixa */
-  margin-top: 15vh;
-  display: flex;
-  gap: 40px;
-  width: max-content;
-  transform: translateX(100vw);
-  animation: rolarClientes 20s linear infinite;
+  flex-shrink: 0; /* impede que o item encolha dentro do flex da .faixa */
+}
+
+/* Foto redonda do cliente */
+.faixa img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  box-shadow: 0 0 15px rgba(128,0,128,0.7); /* brilho ao redor do círculo */
+  /* drop-shadow contorna a silhueta real do PNG (inclusive partes com fundo transparente),
+     diferente do box-shadow, que só ilumina o quadrado/círculo do elemento */
+  filter: drop-shadow(0 0 4px rgba(186,85,211,0.9))
+          drop-shadow(0 0 8px rgba(186,85,211,0.6));
+  flex-shrink: 0;
+  display: block;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, filter 0.3s ease;
+}
+
+/* Ao passar o mouse no item, a foto cresce um pouco e brilha mais forte (círculo + silhueta) */
+.clienteItem:hover img {
+  transform: scale(1.08);
+  box-shadow: 0 0 25px rgba(186,85,211,0.9);
+  filter: drop-shadow(0 0 6px rgba(186,85,211,1))
+          drop-shadow(0 0 12px rgba(186,85,211,0.8));
+}
+
+/* Balão de feedback: fica invisível até o hover */
+.feedbackBox {
+  position: absolute;      /* posiciona relativo ao .clienteItem (pai) */
+  bottom: 130%;            /* fica acima da foto, com uma folga */
+  left: 50%;
+  transform: translateX(-50%) translateY(10px); /* centraliza e desce 10px (efeito de entrada) */
+  width: 240px;
+
+  background: rgba(20, 0, 30, 0.95);
+  border: 1px solid rgba(186,85,211,0.6);
+  border-radius: 10px;
+  padding: 14px 16px;
+
+  color: #d9d9d9;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 14px;
+  line-height: 1.4;
+  text-align: center;
+
+  box-shadow: 0 0 25px rgba(128,0,128,0.6);
+
+  /* Esconde sem usar display:none, assim dá pra animar a transição */
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none; /* impede que a caixa "roube" o hover do mouse e pisque */
+
+  transition: opacity 0.25s ease, transform 0.25s ease;
+  z-index: 10; /* garante que a caixa fique por cima de tudo */
+}
+
+/* Nome do cliente dentro do balão */
+.feedbackBox strong {
+  display: block;
+  margin-bottom: 6px;
+  color: rgb(186,85,211);
+  font-family: 'Comic', Helvetica, sans-serif;
+  font-size: 16px;
+}
+
+/* Texto do feedback dentro do balão */
+.feedbackBox p {
+  margin: 0;
+}
+
+/* Setinha triangular embaixo do balão, apontando pra foto */
+.feedbackBox::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 8px;
+  border-style: solid;
+  border-color: rgba(186,85,211,0.6) transparent transparent transparent;
+}
+
+/* Ao passar o mouse no cliente, o balão aparece e "sobe" suavemente até a posição final */
+.clienteItem:hover .feedbackBox {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
 }
 
 
-/* Balões Videos - Portifolio */
-
+/* ===================== Balões de Vídeos - Portfólio ===================== */
 
 .videoContainer {
     display: flex;
-    justify-content: center;   /* centraliza os vídeos */
-    flex-wrap: wrap;           /* quebra linha se não couber */
-    gap: 40px;                 /* espaçamento entre os vídeos */
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 40px;
     margin: 10vh 0;
-    max-width: 100%;           /* nunca ultrapassa a largura da tela */
-    box-sizing: border-box;    /* inclui padding/margin no cálculo */
+    max-width: 100%;
+    box-sizing: border-box;
 }
 
 .videoContainer iframe {
-    width: 400px;              /* tamanho fixo do player */
+    width: 400px;
     height: 250px;
     border-radius: 15px;
     border: none;
-    background: radial-gradient(circle, 
-                rgba(75,0,130,0.6), 
+    background: radial-gradient(circle,
+                rgba(75,0,130,0.6),
                 rgba(0,0,0,0.9));
     box-shadow: 0 0 30px rgba(128,0,128,0.7);
     transition: all 0.4s ease-in-out;
-    max-width: 100%;           /* garante que não estoure no mobile */
+    max-width: 100%;
 }
 
 .videoContainer iframe:hover {
-    box-shadow: 0 0 60px rgba(186,85,211,0.9), /* brilho roxo mais forte */
-                0 0 100px rgba(186,85,211,0.7); /* camada extra de glow */
-    transform: scale(1.03);        /* aumenta levemente ao passar o mouse */
+    box-shadow: 0 0 60px rgba(186,85,211,0.9),
+                0 0 100px rgba(186,85,211,0.7);
+    transform: scale(1.03);
 }
 
 
-
-  /* Portfólio Principal*/
-
+/* ===================== Portfólio Principal (filtro de categorias) ===================== */
 
 .tituloCategoria {
   text-align: center;
   font-family: 'Comic', Helvetica, sans-serif;
   font-size: 3vh;
   margin-top: 5vh;
-
 }
 
 .categorias {
@@ -204,8 +282,7 @@ html, body {
 }
 
 
-
-       /* Aba Contrate-me*/
+/* ===================== Aba Contrate-me ===================== */
 
 .social {
   text-align: center;
@@ -219,39 +296,25 @@ html, body {
   display: flex;
   gap: 60px;
   justify-content: center;
-  margin-top: 4vh; 
+  margin-top: 4vh;
 }
 
 .icones img {
   width: 60px;
   height: 60px;
   background: none;
-  animation: flutuar 3s ease-in-out infinite;
+  animation: flutuar 3s ease-in-out infinite; /* flutua sozinho, mesmo sem hover */
   transition: transform 0.4s ease, box-shadow 0.4s ease;
 }
 
-/* animação de flutuação */
+/* Animação de flutuação suave dos ícones */
 @keyframes flutuar {
   0%   { transform: translateY(0) scale(1); }
-  50%  { transform: translateY(-8px) scale(1.1); } /* sobe um pouco */
+  50%  { transform: translateY(-8px) scale(1.1); }
   100% { transform: translateY(0) scale(1); }
 }
 
-/* hover com escala + brilho roxo */
+/* Ao passar o mouse, o ícone sobe e cresce mais */
 .icones img:hover {
-  transform: translateY(-8px) scale(1.25); /* mantém a flutuação e cresce */
+  transform: translateY(-8px) scale(1.25);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
