@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="pt-BR"> <!-- idioma da página -->
+<head>
+  <meta charset="UTF-8"> <!-- acentos corretos -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- adapta ao celular -->
+  <meta name="theme-color" content="#8820CD"> <!-- cor da barra no celular -->
+  <title>Jota | Portfólio</title> <!-- título da aba -->
+  <!-- Fontes: Rubik Dirt (títulos sujos), Bebas (TRABALHOS), Kalam (texto à mão), Permanent Marker (botões) -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rubik+Dirt&family=Bebas+Neue&family=Kalam:wght@400;700&family=Permanent+Marker&display=swap">
+  <link rel="stylesheet" href="css/style.css"> <!-- seu CSS -->
+</head>
+<body class="travado"> <!-- "travado" bloqueia a rolagem até o site carregar -->
+
+  <!-- Desenhos reutilizáveis (invisíveis): filtro de rabisco, olho, rosa e seta -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <filter id="rabisco"> <!-- deixa bordas tremidas, como à lápis -->
+      <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="3" result="r"/>
+      <feDisplacementMap in="SourceGraphic" in2="r" scale="7"/>
+    </filter>
+    <symbol id="seta" viewBox="0 0 24 24"> <!-- seta dupla para baixo -->
+      <path d="M4 4l8 8 8-8M4 12l8 8 8-8" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    </symbol>
+  </svg>
+
+  <!-- ============ TELA DE CARREGAMENTO ============ -->
+  <div id="carregando">
+    <p>CARREGANDO...</p>
+    <div class="barraFundo"><i id="barra"></i></div> <!-- barra de progresso (o JS enche) -->
+  </div>
+
+  <!-- ============ NAVBAR (papel rasgado) ============ -->
+  <nav class="nav papel">
+    <a href="#inicio" class="logo">JOTA</a> <!-- logo -->
+    <ul class="links"> <!-- menu -->
+      <li><a href="#clientes" data-i18n="navClientes">CLIENTES</a></li>
+      <li><a href="#trabalhos" data-i18n="navTrabalhos">TRABALHOS</a></li>
+      <li><a href="#sobre" data-i18n="navSobre">SOBRE MIM</a></li>
+      <li><a href="#contato" data-i18n="navContato">CONTATO</a></li>
+    </ul>
+    <div class="acoes">
+      <button class="idioma" id="idioma">PT</button> <!-- troca PT/EN -->
+      <button class="btn" data-abrir-contato data-i18n="contratar">CONTRATAR</button> <!-- abre o contato -->
+    </div>
+  </nav>
+
+  <!-- ============ HERO: vídeo dentro do balão com espinhos ============ -->
+  <header class="hero" id="inicio">
+    <!-- Fundo da seção: vídeo de linhas de velocidade (o CSS corta ele na linha roxa) -->
+    <div class="heroFundo"><video src="video/fundo.mp4" autoplay muted loop playsinline preload="auto"></video></div>
+
+    <div class="balao" id="balao"> <!-- vídeo flutuante, sem faixas pretas -->
+      <div class="balaoVideo" id="heroVideo"></div> <!-- vídeo com bordas suaves (o JS coloca o player aqui) -->
+    </div>
+    <p class="subtitulo" data-i18n="subtitulo">Editor de Vídeos</p>
+    <a href="#trabalhos" class="btn grande" data-i18n="verProjetos">VER PROJETOS</a> <!-- rola até os trabalhos -->
+
+    <!-- Divisória roxa em zigue-zague -->
+    <svg class="divisoria" viewBox="0 0 1920 60" preserveAspectRatio="none" aria-hidden="true">
+      <polyline points="0,22 240,8 530,32 1065,16 1265,38 1535,10 1800,30 1920,18"/>
+    </svg>
+  </header>
+
+  <!-- ============ CLIENTES (carrossel infinito) ============ -->
+  <section class="secao" id="clientes">
+    <h2 class="secTitulo" data-i18n="tClientes">CLIENTES</h2>
+    <div class="carrossel"><div class="trilho" id="trilho"></div></div> <!-- o JS monta os clientes -->
+    <a href="#trabalhos" class="seta" aria-label="Descer"><svg><use href="#seta"/></svg></a> <!-- seta que pula -->
+  </section>
+
+  <!-- ============ TRABALHOS ============ -->
+  <section class="secao" id="trabalhos">
+    <h2 class="secTitulo vermelho" data-i18n="tTrabalhos">TRABALHOS</h2> <!-- título vermelho -->
+    <div class="botoes" id="botoes"> <!-- filtros -->
+      <button class="papel ativo" data-categoria="todos" data-i18n="fTodos">Todos</button>
+      <button class="papel" data-categoria="gameplays">Gameplays</button>
+      <button class="papel" data-categoria="shorts">Shorts</button>
+    </div>
+    <div class="videoContainer" id="videoContainer"></div> <!-- o JS cria os cards -->
+    <p class="vazio" id="vazio" hidden data-i18n="vazio">Em breve, novos trabalhos nessa categoria.</p>
+  </section>
+
+  <!-- ============ SOBRE MIM ============ -->
+  <section class="secao" id="sobre">
+    <h2 class="secTitulo" data-i18n="tSobre">SOBRE MIM</h2>
+    <div class="sobreCaixa papel"> <!-- papel creme com papel vermelho atrás -->
+      <span class="aspas a1">“</span> <!-- aspas de abrir -->
+      <p data-i18n="sobreTexto">Sou o Jota, editor de vídeos focado em Shorts e Gameplays. Trabalho com ritmo, transparência e prazos curtos, mostrando cada etapa do processo para você acompanhar de perto.</p>
+      <span class="aspas a2">”</span> <!-- aspas de fechar -->
+    </div>
+    <a href="#contato" class="seta" aria-label="Descer"><svg><use href="#seta"/></svg></a>
+  </section>
+
+  <!-- ============ CONTATO ============ -->
+  <section class="secao" id="contato">
+    <h2 class="secTitulo" data-i18n="tContato">CONTATO</h2>
+    <div class="pilula"><b></b><span data-i18n="comissoes">COMMISSIONS: ON</span></div> <!-- selo movido da navbar para cá -->
+    <div class="icones"> <!-- troque os links pelos seus -->
+      <a href="https://twitter.com/seuUsuario" target="_blank" rel="noopener"><img src="img/icons/twiter.png" alt="Twitter"></a>
+      <a href="https://discord.gg/CeVJtpy9f" target="_blank" rel="noopener"><img src="img/icons/discord-icon.png" alt="Discord"></a>
+      <a href="https://wa.me/5577991408622" target="_blank" rel="noopener"><img src="img/icons/whatsa.png" alt="WhatsApp"></a>
+    </div>
+    <p class="contatoTxt" data-i18n="modalTxt">Entre em contato por uma dessas redes.</p>
+  </section>
+
+  <footer class="rodape">© 2026 Jota — <span data-i18n="direitos">Todos os direitos reservados.</span></footer>
+
+  <!-- ============ MODAL DO VÍDEO ============ -->
+  <div class="modal" id="modalVideo" hidden>
+    <div class="videoModal">
+      <div class="player" id="player"></div> <!-- vídeo completo -->
+      <aside class="info papel"> <!-- painel de papel -->
+        <button class="fechar" data-fechar aria-label="Fechar">X</button>
+        <span class="tag" id="vTag"></span>
+        <h3 id="vTitulo"></h3>
+        <p id="vDesc"></p>
+      </aside>
+    </div>
+  </div>
+
+  <!-- ============ MODAL CONTRATAR ============ -->
+  <div class="modal" id="modalContato" hidden>
+    <div class="modalCaixa papel">
+      <button class="fechar" data-fechar aria-label="Fechar">X</button>
+      <h2 data-i18n="contratar">CONTRATAR</h2>
+      <p data-i18n="modalTxt">Entre em contato por uma dessas redes.</p>
+      <div class="icones">
+        <a href="https://twitter.com/seuUsuario" target="_blank" rel="noopener"><img src="img/icons/twiter.png" alt="Twitter"></a>
+        <a href="https://discord.gg/CeVJtpy9f" target="_blank" rel="noopener"><img src="img/icons/discord-icon.png" alt="Discord"></a>
+        <a href="https://wa.me/5577991408622" target="_blank" rel="noopener"><img src="img/icons/whatsa.png" alt="WhatsApp"></a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Ordem importa: config, idioma, lógica principal -->
+  <script src="js/videos.js"></script>
+  <script src="js/idioma.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

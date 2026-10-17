@@ -1,0 +1,165 @@
+/* ===================== FONTE E CORES ===================== */
+@font-face { font-family: 'Comic'; src: url('../fonts/HeyComic.otf') format('opentype'), url('../fonts/HeyComic.ttf') format('truetype'); }
+@font-face {font-family: 'Giant'; src: url('../fonts/Giants.otf') format('opentype'); } /* sua fonte */
+
+:root {
+  --preto: #000;          /* fundo */
+  --papel: #f5e6c8;       /* papel creme */
+  --tinta: #111;          /* texto sobre papel */
+  --roxo: #8820CD;        /* destaque 1 */
+  --vermelho: #ff3355;    /* destaque 2 (TRABALHOS, sobre mim) */
+}
+
+* { box-sizing: border-box; }                                   /* largura inclui padding */
+html { scroll-behavior: smooth; scroll-padding-top: 110px; }    /* rolagem suave sem esconder sob a navbar */
+body { margin: 0; background: var(--preto); color: #cfcfcf; font-family: 'Kalam', Arial, sans-serif; overflow-x: hidden; }
+body.travado { overflow: hidden; }                              /* bloqueia rolagem durante o carregamento */
+
+/* ===================== PAPEL RASGADO (reutilizável) ===================== */
+.papel { position: relative; isolation: isolate; color: var(--tinta); }   /* fundo fica atrás do texto */
+.papel::before { content: ""; position: absolute; inset: 0; z-index: -1; background: var(--papel); filter: url(#rabisco); } /* papel com borda tremida */
+
+/* ===================== BOTÕES ===================== */
+.btn { font-family: 'Permanent Marker', cursive; font-size: 15px; letter-spacing: 1px; background: var(--roxo); color: var(--papel); border: 3px solid #000; box-shadow: 4px 4px 0 #000; padding: 10px 22px; cursor: pointer; text-decoration: none; display: inline-block; transition: transform .2s, box-shadow .2s; }
+.btn:hover { transform: translate(-2px, -2px) rotate(-1deg); box-shadow: 7px 7px 0 #000; }  /* "pula" no hover */
+.btn.grande { font-size: 24px; padding: 16px 44px; }          /* botão VER PROJETOS */
+
+/* ===================== TELA DE CARREGAMENTO ===================== */
+#carregando { position: fixed; inset: 0; z-index: 999; background: #000; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 22px; transition: opacity .7s, visibility .7s; }
+#carregando.saiu { opacity: 0; visibility: hidden; }            /* some suavemente quando tudo carregou */
+#carregando p { margin: 0; font-family: 'Permanent Marker'; letter-spacing: 4px; color: var(--papel); }
+.barraFundo { width: min(280px, 70vw); height: 8px; border: 2px solid var(--papel); border-radius: 8px; overflow: hidden; } /* trilho da barra */
+.barraFundo i { display: block; height: 100%; width: 0; background: var(--roxo); transition: width .3s; }               /* parte que enche */
+
+/* ===================== NAVBAR ===================== */
+.nav { position: fixed; top: 14px; left: 50%; transform: translateX(-50%); width: min(1270px, 94%); z-index: 50; display: flex; align-items: center; gap: 20px; padding: 14px 30px; } /* barra de papel flutuante */
+.logo { font-family: 'Giant'; font-size: 30px; color: var(--tinta); text-decoration: none; }
+.links { display: flex; gap: 34px; list-style: none; margin: 0 auto; padding: 0; }
+.links a { color: var(--tinta); text-decoration: none; font-weight: 700; font-size: 19px; text-transform: uppercase; transition: color .2s; }
+.links a:hover { color: var(--roxo); }
+.acoes { display: flex; align-items: center; gap: 14px; }
+.idioma { font-family: 'Kalam'; font-weight: 700; font-size: 16px; background: none; color: var(--tinta); border: 2px solid var(--tinta); border-radius: 50% / 60%; padding: 6px 14px; cursor: pointer; } /* PT/EN em oval */
+
+/* ===================== HERO ===================== */
+.hero { position: relative; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 22px; padding: 130px 20px 110px; }
+/* Fundo da seção: vídeo cortado EXATAMENTE na linha roxa (mesmos pontos do polyline do HTML) */
+.heroFundo { position: absolute; inset: 0; z-index: 0; overflow: hidden;
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 40px), 93.75% calc(100% - 28px), 79.948% calc(100% - 48px), 65.885% calc(100% - 20px), 55.469% calc(100% - 42px), 27.604% calc(100% - 26px), 12.5% calc(100% - 50px), 0 calc(100% - 36px)); } /* nada passa para baixo da linha */
+.heroFundo video { display: block; width: 100%; height: 100%; object-fit: cover; opacity: .9; } /* cobre a seção toda */
+.hero > .balao, .hero > .subtitulo, .hero > .btn { position: relative; z-index: 1; } /* conteúdo fica acima do fundo */
+
+/* Vídeo do topo: caixa vertical 9:16 = tamanho exato do vídeo (sem faixas pretas) */
+.balao { --alt: min(60vh, 580px); height: var(--alt); width: calc(var(--alt) * 9 / 16); animation: voar 6s ease-in-out infinite; }
+.balao.horizontal { width: min(860px, 88vw); height: auto; aspect-ratio: 16 / 9; } /* se o vídeo do topo for horizontal */
+@keyframes voar { 50% { transform: translateY(-16px) rotate(.8deg); } }
+.balao::before { content: ""; position: absolute; inset: -80px; z-index: -1; pointer-events: none; /* halo desfocado em volta */
+  -webkit-backdrop-filter: blur(16px) saturate(1.3); backdrop-filter: blur(16px) saturate(1.3);  /* borra o fundo atrás do halo */
+  background: radial-gradient(closest-side, rgba(136, 32, 205, .4), rgba(136, 32, 205, 0));        /* brilho roxo de sonho */
+  -webkit-mask-image: radial-gradient(closest-side, #000 55%, transparent); mask-image: radial-gradient(closest-side, #000 55%, transparent); } /* o desfoque some suavemente para fora */
+.balaoVideo { position: absolute; inset: 0; overflow: hidden; /* bordas do vídeo derretem (fade) em vez de cortar reto */
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 15%, #000 85%, transparent), linear-gradient(to bottom, transparent, #000 11%, #000 89%, transparent);
+  mask-image: linear-gradient(to right, transparent, #000 15%, #000 85%, transparent), linear-gradient(to bottom, transparent, #000 11%, #000 89%, transparent);
+  -webkit-mask-composite: source-in; mask-composite: intersect; }                                   /* junta os dois fades (lados + topo/base) */
+.balaoVideo iframe { position: absolute; top: 0; left: 50%; height: 100%; width: calc(var(--alt) * 16 / 9); border: 0; pointer-events: none; transform: translateX(-50%) scale(1.15); transform-origin: 50% 100%; } /* player 16:9 centralizado; scale esconde o título do YouTube */
+.balaoVideo video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; } /* caso use .mp4 no topo */
+.balao.horizontal .balaoVideo iframe { width: 100%; transform: translateX(-50%) scale(1.3); }
+.subtitulo { margin: 0; font-family: 'Comic'; font-size: 22px; color: var(--papel); }
+.divisoria { z-index: 2; position: absolute; left: 0; bottom: -2px; width: 100%; height: 60px; } /* divisória roxa */
+.divisoria polyline { fill: none; stroke: var(--roxo); stroke-width: 6; vector-effect: non-scaling-stroke; }
+
+/* ===================== SEÇÕES ===================== */
+.secao { max-width: 1200px; margin: 0 auto; padding: 100px 20px 30px; text-align: center; }
+.secTitulo { margin: 0 0 40px; font-family: 'Permanent Marker'; font-weight: 400; font-size: clamp(46px, 8vw, 88px); color: #fff; letter-spacing: 2px; } /* título branco sujo */
+.secTitulo.vermelho { font-family: 'Bebas Neue'; color: var(--vermelho); font-size: clamp(64px, 11vw, 130px); } /* TRABALHOS vermelho */
+.revelar { opacity: 0; transform: translateY(30px); transition: opacity .7s, transform .7s; }
+.revelar.visivel { opacity: 1; transform: none; }
+
+/* Seta dupla que sobe e desce rápido */
+.seta { display: block; width: 44px; margin: 50px auto 0; color: var(--papel); animation: pula .7s ease-in-out infinite alternate; }
+.seta svg { width: 100%; height: 44px; }
+@keyframes pula { to { transform: translateY(-14px); } }
+
+/* ===================== CLIENTES (carrossel) ===================== */
+#clientes { max-width: none; padding-left: 0; padding-right: 0; } /* carrossel ocupa a tela toda */
+.carrossel { overflow: hidden; width: 100%; padding-top: 150px; margin-top: -150px; } /* esconde o que sai da borda; padding deixa o balão aparecer */
+.trilho { display: flex; width: max-content; will-change: transform; }   /* faixa que desliza (movida pelo JS) */
+.grupo { display: flex; gap: 64px; flex-shrink: 0; } /* sem borda extra: o JS define a largura da volta */
+.clienteItem { position: relative; min-width: 130px; }
+.clienteItem img { width: 128px; height: 128px; border-radius: 50%; object-fit: cover; display: block; margin: 0 auto; cursor: pointer; transition: transform .3s; }
+.clienteItem:hover img { transform: scale(1.1) rotate(-3deg); }
+.nomeCliente { display: block; margin-top: 14px; font-style: italic; font-size: 20px; color: var(--vermelho); white-space: nowrap; } /* nome embaixo da foto */
+.feedbackBox { position: absolute; bottom: 100%; left: 50%; width: 250px; margin-bottom: 14px; padding: 14px 16px; transform: translateX(-50%) translateY(10px); background: var(--papel); color: var(--tinta); border: 2px solid #000; box-shadow: 4px 4px 0 var(--roxo); font-size: 15px; line-height: 1.4; opacity: 0; visibility: hidden; pointer-events: none; transition: opacity .25s, transform .25s; z-index: 10; }
+.feedbackBox strong { display: block; color: var(--roxo); font-family: 'Permanent Marker'; margin-bottom: 4px; }
+.feedbackBox p { margin: 0; }
+.clienteItem:hover .feedbackBox { opacity: 1; visibility: visible; transform: translateX(-50%); }
+
+/* ===================== TRABALHOS ===================== */
+.botoes { display: flex; justify-content: center; flex-wrap: wrap; gap: 14px; margin-bottom: 40px; }
+.botoes button { padding: 10px 26px; font-family: 'Permanent Marker'; font-size: 16px; border: 0; background: none; cursor: pointer; transition: transform .2s; }
+.botoes button:nth-child(odd) { transform: rotate(-2deg); }     /* inclinações alternadas */
+.botoes button:nth-child(even) { transform: rotate(1.5deg); }
+.botoes button:hover { transform: scale(1.08) rotate(0); }
+.botoes button.ativo { color: #fff; }
+.botoes button.ativo::before { background: var(--roxo); }       /* aba ativa roxa */
+
+.videoContainer { display: flex; justify-content: center; flex-wrap: wrap; gap: 28px; }
+.card { position: relative; overflow: hidden; padding: 0; background: #000; border: 1px solid #333; border-radius: 12px; cursor: pointer; transition: transform .3s, box-shadow .3s; }
+.card.oculto { position: absolute; left: -9999px; pointer-events: none; } /* filtrado: sai da tela mas continua carregado/tocando */
+.card.vertical { width: 230px; aspect-ratio: 9 / 16; }
+.card.horizontal { width: 380px; aspect-ratio: 16 / 9; }
+.card:hover { transform: translateY(-6px) rotate(-1deg); box-shadow: 6px 6px 0 var(--roxo); border-color: var(--papel); }
+.card iframe { position: absolute; top: 50%; left: 50%; width: 100%; height: 100%; border: 0; pointer-events: none; transform: translate(-50%, -50%) scale(1.5); }
+.card .play { position: absolute; inset: 0; display: grid; place-items: center; background: rgba(0,0,0,.35); opacity: 0; transition: opacity .25s; }
+.card .play::after { content: ""; width: 54px; height: 54px; background: var(--papel); clip-path: polygon(25% 15%, 25% 85%, 85% 50%); }
+.card:hover .play { opacity: 1; }
+.vazio { margin-top: 20px; color: var(--papel); font-size: 18px; }
+
+/* ===================== SOBRE MIM ===================== */
+.sobreCaixa { max-width: 820px; margin: 10px auto 0; padding: 56px 72px; }
+.sobreCaixa::after { content: ""; position: absolute; inset: 0; z-index: -2; background: var(--vermelho); transform: translate(-22px, 16px) rotate(-1deg); filter: url(#rabisco); } /* papel vermelho atrás */
+.sobreCaixa p { margin: 0; font-weight: 700; font-size: clamp(20px, 2.6vw, 30px); line-height: 1.4; }
+.aspas { position: absolute; font-family: 'Rubik Dirt'; font-size: 96px; line-height: 1; }
+.aspas.a1 { top: 6px; left: 22px; color: rgba(255, 51, 85, .45); }
+.aspas.a2 { bottom: -14px; right: 24px; color: rgba(136, 32, 205, .45); }
+
+/* ===================== CONTATO ===================== */
+.pilula { display: inline-flex; align-items: center; gap: 12px; padding: 12px 30px; border: 2px solid var(--papel); border-radius: 40px; color: var(--papel); font-family: 'Permanent Marker'; font-size: 22px; } /* COMMISSIONS: ON */
+.pilula b { width: 14px; height: 14px; border-radius: 50%; background: #2ecc71; box-shadow: 0 0 10px #2ecc71; animation: pisca 1.6s infinite; }
+@keyframes pisca { 50% { opacity: .35; } }
+.icones { display: flex; justify-content: center; gap: 34px; margin-top: 36px; }
+.icones a { position: relative; isolation: isolate; display: grid; place-items: center; width: 76px; height: 76px; transition: transform .3s; }
+.icones a::before { content: ""; position: absolute; inset: 0; z-index: -1; background: #111; border: 3px solid #3b1a66; border-radius: 16px; filter: url(#rabisco); } /* quadrado escuro com borda roxa tremida */
+.icones a:hover { transform: translateY(-6px) rotate(-4deg); }
+.icones img { width: 42px; height: 42px; display: block; }
+.contatoTxt { margin-top: 44px; font-size: 22px; letter-spacing: 1px; text-transform: uppercase; color: #8a8576; }
+.rodape { margin-top: 90px; padding: 26px; text-align: center; font-size: 14px; border-top: 2px dashed rgba(245,230,200,.25); color: #777; }
+
+/* ===================== MODAIS ===================== */
+.modal { position: fixed; inset: 0; z-index: 100; display: flex; align-items: center; justify-content: center; padding: 16px; background: rgba(0,0,0,.88); }
+.modal[hidden] { display: none; }
+.videoModal { display: flex; gap: 22px; align-items: stretch; max-width: 1000px; max-height: 92vh; }
+.player { background: #000; flex-shrink: 0; height: min(82vh, 560px); }
+.player.horizontal { aspect-ratio: 16 / 9; height: auto; width: min(640px, 58vw); }
+.player.vertical { aspect-ratio: 9 / 16; }
+.player iframe { width: 100%; height: 100%; border: 0; }
+.info { width: 300px; padding: 54px 28px 28px; text-align: left; }
+.info h3 { margin: 14px 0 8px; font-family: 'Bebas Neue'; font-weight: 400; font-size: 40px; line-height: 1; }
+.info p { margin: 0; font-size: 18px; }
+.tag { display: inline-block; padding: 4px 12px; background: var(--roxo); color: #fff; font-family: 'Permanent Marker'; font-size: 13px; text-transform: uppercase; box-shadow: 4px 4px 0 #000; }
+.fechar { position: absolute; top: 12px; right: 12px; z-index: 2; width: 38px; height: 38px; border-radius: 50%; background: #fff; border: 3px solid #000; box-shadow: 3px 3px 0 #000; font-family: 'Permanent Marker'; cursor: pointer; }
+.fechar:hover { background: var(--roxo); color: #fff; }
+.modalCaixa { width: min(440px, 100%); padding: 44px 28px 32px; text-align: center; }
+.modalCaixa h2 { margin: 0 0 6px; font-family: 'Bebas Neue'; font-weight: 400; font-size: 40px; }
+.modalCaixa .icones { margin-top: 24px; }
+
+/* ===================== CELULAR ===================== */
+@media (max-width: 820px) {
+  .links { display: none; }
+  .nav { padding: 12px 18px; justify-content: space-between; }
+  .videoModal { flex-direction: column; overflow-y: auto; }
+  .player { height: auto; width: 100%; max-height: 62vh; }
+  .info { width: 100%; padding-top: 36px; }
+  .sobreCaixa { padding: 44px 28px; }
+  .balao { --alt: min(54vh, 460px); } /* vídeo menor no celular */
+}
+@media (prefers-reduced-motion: reduce) { *:not(#carregando *) { animation: none !important; transition: none !important; } .revelar { opacity: 1; transform: none; } }
